@@ -14,7 +14,8 @@
     "fmt": "prettier --write src/**/*.ts"
   },
   "bin": {
-    "defang": "dist/bin/defang.js"
+    "defang": "dist/bin/defang.js",
+    "refang": "dist/bin/refang.js"
   },
   "repository": {
     "type": "git",
