@@ -44,6 +44,8 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "get-stdin": "^7.0.0"
+    "escape-string-regexp": "^2.0.0",
+    "get-stdin": "^7.0.0",
+    "ioc-extractor": "^2.0.3"
   }
 }
