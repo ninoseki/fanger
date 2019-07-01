@@ -1,13 +1,20 @@
-import { IOCExtractor } from "ioc-extractor";
+import {
+  extractIPv4,
+  extractDomain,
+  extractURL,
+} from "ioc-extractor/dist/aux/extractor";
 import escapeStringRegexp from "escape-string-regexp";
 
 function extractNetworkIOCs(text: string): string[] {
-  const ioc = IOCExtractor.getIOC(text);
   const networks: string[] = [];
+  const urls = extractURL(text);
+  const domains = extractDomain(text);
+  const ipv4s = extractIPv4(text);
+
   return networks
-    .concat(ioc.urls)
-    .concat(ioc.domains)
-    .concat(ioc.ipv4s);
+    .concat(urls)
+    .concat(domains)
+    .concat(ipv4s);
 }
 
 function replaceDots(text: string): string {
