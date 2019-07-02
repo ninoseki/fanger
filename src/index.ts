@@ -1,41 +1,54 @@
-import {
-  extractIPv4,
-  extractDomain,
-  extractURL,
-} from "ioc-extractor/dist/aux/extractor";
+import { extractIPv4, extractDomain } from "ioc-extractor/dist/aux/extractor";
 import escapeStringRegexp from "escape-string-regexp";
+import tlds from "tlds";
 
-function extractNetworkIOCs(text: string): string[] {
-  const networks: string[] = [];
-  const urls = extractURL(text);
-  const domains = extractDomain(text);
+function replaceDot(text: string): string {
+  return text.replace(/\./i, "[.]");
+}
+
+function replaceDotBeforeTLD(text: string): string {
+  const parts: string[] = text.split(".");
+  let replaced: string[] = [];
+
+  for (const part of parts) {
+    const prefix = tlds.includes(part) ? "[.]" : ".";
+    replaced = replaced.concat([prefix, part]);
+  }
+  replaced.shift();
+
+  return replaced.join("");
+}
+
+function defangIPs(text: string): string {
   const ipv4s = extractIPv4(text);
-
-  return networks
-    .concat(urls)
-    .concat(domains)
-    .concat(ipv4s);
+  for (const ipv4 of ipv4s) {
+    const escaped = escapeStringRegexp(ipv4);
+    const regexp = new RegExp(escaped, "g");
+    text = text.replace(regexp, replaceDot(ipv4));
+  }
+  return text;
 }
 
-function replaceDots(text: string): string {
-  return text.replace(/\./gi, "[.]");
+function defangDomains(text: string): string {
+  const domains = extractDomain(text);
+  for (const domain of domains) {
+    const escaped = escapeStringRegexp(domain);
+    const regexp = new RegExp(escaped, "g");
+    text = text.replace(regexp, replaceDotBeforeTLD(domain));
+  }
+  return text;
 }
 
-function replaceHTTPSchemes(text: string): string {
+function defangHTTPSchemes(text: string): string {
   return text
     .replace(/http:\/\//gi, "hxxp://")
     .replace(/https:\/\//gi, "hxxps://");
 }
 
 export function defang(text: string): string {
-  const networkIOCs = extractNetworkIOCs(text);
-
-  for (const ioc of networkIOCs) {
-    const escaped = escapeStringRegexp(ioc);
-    const regexp = new RegExp(escaped, "g");
-    text = text.replace(regexp, replaceHTTPSchemes(replaceDots(ioc)));
-  }
-
+  text = defangHTTPSchemes(text);
+  text = defangIPs(text);
+  text = defangDomains(text);
   return text;
 }
 
