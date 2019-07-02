@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.0.10",
+    "@types/tlds": "^1.199.0",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "coveralls": "^3.0.4",
@@ -46,6 +47,7 @@
   "dependencies": {
     "escape-string-regexp": "^2.0.0",
     "get-stdin": "^7.0.0",
-    "ioc-extractor": "^2.0.3"
+    "ioc-extractor": "^2.0.3",
+    "tlds": "^1.203.1"
   }
 }
