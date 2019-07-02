@@ -1,5 +1,6 @@
 # fanger
 
+[![npm version](https://badge.fury.io/js/fanger.svg)](https://badge.fury.io/js/fanger)
 [![Build Status](https://travis-ci.org/ninoseki/fanger.svg?branch=master)](https://travis-ci.org/ninoseki/fanger)
 [![CodeFactor](https://www.codefactor.io/repository/github/ninoseki/fanger/badge)](https://www.codefactor.io/repository/github/ninoseki/fanger)
 [![Coverage Status](https://coveralls.io/repos/github/ninoseki/fanger/badge.svg?branch=master)](https://coveralls.io/github/ninoseki/fanger?branch=master)
