@@ -58,3 +58,47 @@ const defangedText = "example[.]com";
 console.log(refang(defangedText));
 // example.com
 ```
+
+## Supported defang/refang techniques
+
+### Defang
+
+The following defang techniques are supported.
+
+#### IPv4
+
+- `1.1.1.1` => `1[.]1.1.1`
+
+The first dot of an IPv4 will be replaced with `[.]`.
+
+#### Domain
+
+- `example.com` => `example[.]com`
+- `test.com.example.com` => `test[.]com.example[.]com`
+
+A dot before a label which is registered as a TLD will be replaced with `[.]`.
+
+#### HTTP scheme
+
+- `http` => `hxxp`
+- `https` =>  `hxxps`
+
+### Supported refang techniques
+
+The following refang techniques are supported.
+
+| Techniques       | Defanged                               | Refanged                        |
+|------------------|----------------------------------------|---------------------------------|
+| `[.]` => `.`     | `1.1.1[.]1`                            | `1.1.1.1`                       |
+| `(.)` => `.`     | `1.1.1(.)1`                            | `1.1.1.1`                       |
+| `\.`  => `.`     | `example\.com`                         | `example.com`                   |
+| `[/]` => `/`     | `http://example.com[/]path`            | `http://example.com/path`       |
+| `[:]` => `:`     | `http[:]//example.com`                 | `http://example.com`            |
+| `hxxp` => `http` | `hxxps://google.com`                   | `https://google.com`            |
+| `[at]` => `@`    | `test[at]example.com`                  | `test@example.com`              |
+| `[@]` => `@`     | `test[@]example.com`                   | `test@example.com`              |
+| `(@)` => `@`     | `test(@)example.com`                   | `test@example.com`              |
+| `[dot]` => `.`   | `test@example[dot]com`                 | `test@example.com`              |
+| `(dot)` => `.`   | `test@example(dot)com`                 | `test@example.com`              |
+| Partial          | `1.1.1[.1`                             | `1.1.1.1`                       |
+| Any combination  | `hxxps[:]//test\.example[.)com[/]path` | `https://test.example.com/path` |
