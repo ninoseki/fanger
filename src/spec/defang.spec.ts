@@ -17,4 +17,7 @@ test("defang", () => {
   expect(defang("http://1.1.1.1")).toBe("hxxp://1[.]1.1.1");
 
   expect(defang("example.none_tld")).toBe("example.none_tld");
+
+  expect(defang("1[.]1.1.1")).toBe("1[.]1.1.1");
+  expect(defang("1[.]1[.]1.1")).toBe("1[.]1.1.1");
 });

@@ -46,6 +46,7 @@ function defangHTTPSchemes(text: string): string {
 }
 
 export function defang(text: string): string {
+  text = refang(text);
   text = defangHTTPSchemes(text);
   text = defangIPs(text);
   text = defangDomains(text);
