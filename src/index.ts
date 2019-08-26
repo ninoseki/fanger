@@ -3,11 +3,13 @@ import escapeStringRegexp from "escape-string-regexp";
 import tlds from "tlds";
 
 function replaceDot(text: string): string {
-  return text.replace(/\./i, "[.]");
+  const refanged = refang(text);
+  return refanged.replace(/\./i, "[.]");
 }
 
 function replaceDotBeforeTLD(text: string): string {
-  const parts: string[] = text.split(".");
+  const refanged = refang(text);
+  const parts: string[] = refanged.split(".");
   let replaced: string[] = [];
 
   for (const part of parts) {
@@ -46,7 +48,6 @@ function defangHTTPSchemes(text: string): string {
 }
 
 export function defang(text: string): string {
-  text = refang(text);
   text = defangHTTPSchemes(text);
   text = defangIPs(text);
   text = defangDomains(text);

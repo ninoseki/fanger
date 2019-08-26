@@ -20,4 +20,6 @@ test("defang", () => {
 
   expect(defang("1[.]1.1.1")).toBe("1[.]1.1.1");
   expect(defang("1[.]1[.]1.1")).toBe("1[.]1.1.1");
+  expect(defang("test[] 1[.]1[.]1.1")).toBe("test[] 1[.]1.1.1");
+  expect(defang("test[.] 1[.]1[.]1.1")).toBe("test[.] 1[.]1.1.1");
 });
