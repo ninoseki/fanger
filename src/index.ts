@@ -2,6 +2,24 @@ import { extractIPv4, extractDomain } from "ioc-extractor/dist/aux/extractor";
 import escapeStringRegexp from "escape-string-regexp";
 import tlds from "tlds";
 
+export function refang(text: string): string {
+  return text
+    .replace(/\[\.\]/gi, ".")
+    .replace(/\[\./gi, ".")
+    .replace(/\.\]/gi, ".")
+    .replace(/\(\.\)/gi, ".")
+    .replace(/\(\./gi, ".")
+    .replace(/\.\)/gi, ".")
+    .replace(/\[:/gi, ":")
+    .replace(/:\]/gi, ":")
+    .replace(/\\\./gi, ".")
+    .replace(/\[\/\]/gi, "/")
+    .replace(/hxxp/gi, "http")
+    .replace(/\[(at|@)\]/gi, "@")
+    .replace(/\((at|@)\)/gi, "@")
+    .replace(/(\[|\()dot(\]|\))/gi, ".");
+}
+
 function replaceDot(text: string): string {
   const refanged = refang(text);
   return refanged.replace(/\./i, "[.]");
@@ -52,22 +70,4 @@ export function defang(text: string): string {
   text = defangIPs(text);
   text = defangDomains(text);
   return text;
-}
-
-export function refang(text: string): string {
-  return text
-    .replace(/\[\.\]/gi, ".")
-    .replace(/\[\./gi, ".")
-    .replace(/\.\]/gi, ".")
-    .replace(/\(\.\)/gi, ".")
-    .replace(/\(\./gi, ".")
-    .replace(/\.\)/gi, ".")
-    .replace(/\[:/gi, ":")
-    .replace(/:\]/gi, ":")
-    .replace(/\\\./gi, ".")
-    .replace(/\[\/\]/gi, "/")
-    .replace(/hxxp/gi, "http")
-    .replace(/\[(at|@)\]/gi, "@")
-    .replace(/\((at|@)\)/gi, "@")
-    .replace(/(\[|\()dot(\]|\))/gi, ".");
 }
