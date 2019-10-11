@@ -8,4 +8,6 @@ test("refang", () => {
   expect(refang("https://example[.]com")).toBe("https://example.com");
 
   expect(refang("example.com")).toBe("example.com");
+
+  expect(refang("hxxp")).toBe("hxxp");
 });

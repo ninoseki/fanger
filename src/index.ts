@@ -14,7 +14,8 @@ export function refang(text: string): string {
     .replace(/:\]/gi, ":")
     .replace(/\\\./gi, ".")
     .replace(/\[\/\]/gi, "/")
-    .replace(/hxxp/gi, "http")
+    .replace(/hxxps:\/\//gi, "https://")
+    .replace(/hxxp:\/\//gi, "http://")
     .replace(/\[(at|@)\]/gi, "@")
     .replace(/\((at|@)\)/gi, "@")
     .replace(/(\[|\()dot(\]|\))/gi, ".");
