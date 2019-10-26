@@ -10,4 +10,6 @@ test("refang", () => {
   expect(refang("example.com")).toBe("example.com");
 
   expect(refang("hxxp")).toBe("hxxp");
+
+  expect(refang("example . com")).toBe("example.com");
 });

@@ -4,6 +4,7 @@ import tlds from "tlds";
 
 export function refang(text: string): string {
   return text
+    .replace(/ /gi, "")
     .replace(/\[\.\]/gi, ".")
     .replace(/\[\./gi, ".")
     .replace(/\.\]/gi, ".")
