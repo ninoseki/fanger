@@ -89,8 +89,10 @@ The following refang techniques are supported.
 
 | Techniques       | Defanged                               | Refanged                        |
 |------------------|----------------------------------------|---------------------------------|
+| Remove spaces    | `1.1.1 . 1`                            | `1.1.1.1`                       |
 | `[.]` => `.`     | `1.1.1[.]1`                            | `1.1.1.1`                       |
 | `(.)` => `.`     | `1.1.1(.)1`                            | `1.1.1.1`                       |
+| `{.}` => `.`     | `1.1.1{.}1`                            | `1.1.1.1`                       |
 | `\.`  => `.`     | `example\.com`                         | `example.com`                   |
 | `[/]` => `/`     | `http://example.com[/]path`            | `http://example.com/path`       |
 | `[:]` => `:`     | `http[:]//example.com`                 | `http://example.com`            |
