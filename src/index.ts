@@ -4,25 +4,18 @@ import tlds from "tlds";
 
 export function refang(text: string): string {
   return text
-    .replace(/ /gi, "")
-    .replace(/{\.}/gi, ".")
-    .replace(/{\./gi, ".")
-    .replace(/\.}/gi, ".")
-    .replace(/\[\.\]/gi, ".")
-    .replace(/\[\./gi, ".")
-    .replace(/\.\]/gi, ".")
-    .replace(/\(\.\)/gi, ".")
-    .replace(/\(\./gi, ".")
-    .replace(/\.\)/gi, ".")
-    .replace(/\[:/gi, ":")
-    .replace(/:\]/gi, ":")
+    .replace(/\s\.\s/gi, ".")
+    .replace(/\s(at|@)\s/gi, "@")
+    .replace(/(\[|\(|\{)\.(\]|\)|\})/gi, ".")
+    .replace(/(\[|\(|\{)\./gi, ".")
+    .replace(/\.(\]|\)|\})/gi, ".")
+    .replace(/\[:\]/gi, ":")
     .replace(/\\\./gi, ".")
     .replace(/\[\/\]/gi, "/")
     .replace(/hxxps:\/\//gi, "https://")
     .replace(/hxxp:\/\//gi, "http://")
-    .replace(/\[(at|@)\]/gi, "@")
-    .replace(/\((at|@)\)/gi, "@")
-    .replace(/(\[|\()dot(\]|\))/gi, ".");
+    .replace(/(\[|\(|\{)(at|@)(\]|\)|\})/gi, "@")
+    .replace(/(\[|\(|\{)dot(\]|\)|\})/gi, ".");
 }
 
 function replaceDot(text: string): string {
