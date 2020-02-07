@@ -1,6 +1,6 @@
 {
   "name": "fanger",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Defang and refang IoC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
