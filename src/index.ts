@@ -1,6 +1,6 @@
 import { extractIPv4, extractDomain } from "ioc-extractor/dist/aux/extractor";
 import escapeStringRegexp from "escape-string-regexp";
-import tlds from "tlds";
+import { tlds } from "./tlds";
 
 export function refang(text: string): string {
   return text
