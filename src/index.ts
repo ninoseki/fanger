@@ -1,5 +1,6 @@
-import { extractIPv4, extractDomain } from "ioc-extractor/dist/aux/extractor";
 import escapeStringRegexp from "escape-string-regexp";
+import { extractDomain, extractIPv4 } from "ioc-extractor/dist/aux/extractor";
+
 import { tlds } from "./tlds";
 
 export function refang(text: string): string {
@@ -48,9 +49,7 @@ function defangIPs(text: string): string {
 }
 
 function defangDomains(text: string): string {
-  const domains = extractDomain(text)
-    .sort()
-    .reverse();
+  const domains = extractDomain(text).sort().reverse();
   for (const domain of domains) {
     const escaped = escapeStringRegexp(domain);
     const regexp = new RegExp(escaped, "g");
