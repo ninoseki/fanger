@@ -10,6 +10,8 @@
   ],
   "plugins": [
     "@typescript-eslint",
+    "prettier",
+    "simple-import-sort",
     "jest"
   ],
   "parser": "@typescript-eslint/parser",
@@ -20,6 +22,8 @@
   "rules": {
     "@typescript-eslint/interface-name-prefix": 0,
     "max-len": 0,
-    "no-console": 0
+    "no-console": 0,
+    "prettier/prettier": "error",
+    "simple-import-sort/sort": "error"
   }
 }
