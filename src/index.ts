@@ -1,22 +1,11 @@
 import escapeStringRegexp from "escape-string-regexp";
+import { refang as _refang } from "ioc-extractor/dist/aux/auxiliary";
 import { extractDomain, extractIPv4 } from "ioc-extractor/dist/aux/extractor";
 
 import { tlds } from "./tlds";
 
 export function refang(text: string): string {
-  return text
-    .replace(/\s\.\s/gi, ".")
-    .replace(/\s(at|@)\s/gi, "@")
-    .replace(/(\[|\(|\{)\.(\]|\)|\})/gi, ".")
-    .replace(/(\[|\(|\{)\./gi, ".")
-    .replace(/\.(\]|\)|\})/gi, ".")
-    .replace(/\[:\]/gi, ":")
-    .replace(/\\\./gi, ".")
-    .replace(/\[\/\]/gi, "/")
-    .replace(/hxxps:\/\//gi, "https://")
-    .replace(/hxxp:\/\//gi, "http://")
-    .replace(/(\[|\(|\{)(at|@)(\]|\)|\})/gi, "@")
-    .replace(/(\[|\(|\{)dot(\]|\)|\})/gi, ".");
+  return _refang(text);
 }
 
 function replaceDot(text: string): string {
