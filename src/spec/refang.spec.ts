@@ -1,17 +1,41 @@
 import { refang } from "../index";
 
-test("refang", () => {
-  expect(refang("example[.]com")).toBe("example.com");
-  expect(refang("test[.]example[.]com")).toBe("test.example.com");
-  expect(refang("test@example[.]com")).toBe("test@example.com");
-  expect(refang("hxxp://example[.]com")).toBe("http://example.com");
-  expect(refang("https://example[.]com")).toBe("https://example.com");
+describe("refang", () => {
+  it.each([
+    ["example[.]com", "example.com"],
+    ["test[.]example[.]com", "test.example.com"],
+    ["test@example[.]com", "test@example.com"],
+    ["https://example[.]com", "https://example.com"],
+  ])("should replace [.] by .", (string, expected) => {
+    expect(refang(string)).toBe(expected);
+  });
 
-  expect(refang("example.com")).toBe("example.com");
+  it.each([["example{.}com", "example.com"]])(
+    "should replace {.} by .",
+    (string, expected) => {
+      expect(refang(string)).toBe(expected);
+    }
+  );
 
-  expect(refang("hxxp")).toBe("hxxp");
+  it.each([
+    ["example . com", "example.com"],
+    ["test . example . com", "test.example.com"],
+  ])("should replace ' . ' by .", (string, expected) => {
+    expect(refang(string)).toBe(expected);
+  });
 
-  expect(refang("example . com")).toBe("example.com");
+  it.each([
+    ["hxxp://example[.]com", "http://example.com"],
+    ["hxxps://example[.]com", "https://example.com"],
+  ])("should replace hxxp:// by http://", (string, expected) => {
+    expect(refang(string)).toBe(expected);
+  });
 
-  expect(refang("example{.}com")).toBe("example.com");
+  it.each([
+    ["example.com", "example.com"],
+    ["hxxp", "hxxp"],
+    ["hxxps", "hxxps"],
+  ])("should replace nothing", (string, expected) => {
+    expect(refang(string)).toBe(expected);
+  });
 });
