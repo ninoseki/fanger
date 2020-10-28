@@ -1,25 +1,50 @@
 import { defang } from "../index";
 
-test("defang", () => {
-  expect(defang("1.1.1.1")).toBe("1[.]1.1.1");
+describe("defang", () => {
+  it.each([
+    ["1.1.1.1", "1[.]1.1.1"],
+    ["127.0.0.1", "127[.]0.0.1"],
+  ])("should replace the first dot", (string, expected) => {
+    expect(defang(string)).toBe(expected);
+  });
 
-  expect(defang("example.com")).toBe("example[.]com");
-  expect(defang("test.example.com")).toBe("test.example[.]com");
-  expect(defang("test@example.com")).toBe("test@example[.]com");
-  expect(defang("http://example.com")).toBe("hxxp://example[.]com");
-  expect(defang("https://example.com")).toBe("hxxps://example[.]com");
+  it.each([
+    ["example.com", "example[.]com"],
+    ["test.example.com", "test.example[.]com"],
+    ["test@example.com", "test@example[.]com"],
+    ["test@example.com", "test@example[.]com"],
+    ["hoge.example.com", "hoge.example[.]com"],
+    ["apple.com.example.com", "apple[.]com.example[.]com"],
+    ["test.co.jp.example.com", "test[.]co[.]jp.example[.]com"],
+    ["example.none_tld", "example.none_tld"],
+  ])("should replace the dot before TLD", (string, expected) => {
+    expect(defang(string)).toBe(expected);
+  });
 
-  expect(defang("hoge.example.com")).toBe("hoge.example[.]com");
-  expect(defang("apple.com.example.com")).toBe("apple[.]com.example[.]com");
-  expect(defang("https://apple.com.example.com")).toBe(
-    "hxxps://apple[.]com.example[.]com"
+  it.each([
+    ["http://example.com", "hxxp://example[.]com"],
+    ["https://example.com", "hxxps://example[.]com"],
+    ["https://apple.com.example.com", "hxxps://apple[.]com.example[.]com"],
+    ["http://1.1.1.1", "hxxp://1[.]1.1.1"],
+  ])("should replace http schemes", (string, expected) => {
+    expect(defang(string)).toBe(expected);
+  });
+
+  it.each([["1[.]1.1.1", "1[.]1.1.1"]])(
+    "should replace nothing when it is already defanged",
+    (string, expected) => {
+      expect(defang(string)).toBe(expected);
+    }
   );
-  expect(defang("http://1.1.1.1")).toBe("hxxp://1[.]1.1.1");
 
-  expect(defang("example.none_tld")).toBe("example.none_tld");
-
-  expect(defang("1[.]1.1.1")).toBe("1[.]1.1.1");
-  expect(defang("1[.]1[.]1.1")).toBe("1[.]1.1.1");
-  expect(defang("test[] 1[.]1[.]1.1")).toBe("test[] 1[.]1.1.1");
-  expect(defang("test[.] 1[.]1[.]1.1")).toBe("test[.] 1[.]1.1.1");
+  it.each([
+    ["1[.]1[.]1.1", "1[.]1.1.1"],
+    ["test[] 1[.]1[.]1.1", "test[] 1[.]1.1.1"],
+    ["test[.] 1[.]1[.]1.1", "test[.] 1[.]1.1.1"],
+  ])(
+    "should adjust format even if it is already defanged",
+    (string, expected) => {
+      expect(defang(string)).toBe(expected);
+    }
+  );
 });
