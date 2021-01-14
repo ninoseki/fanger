@@ -62,6 +62,6 @@
   "dependencies": {
     "escape-string-regexp": "4.0.0",
     "get-stdin": "8.0.0",
-    "ioc-extractor": "2.7.0"
+    "ioc-extractor": "2.7.2"
   }
 }
