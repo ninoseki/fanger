@@ -1,5 +1,5 @@
 import escapeStringRegexp from "escape-string-regexp";
-import { refang as _refang } from "ioc-extractor";
+import { extractIPv4s, refang as _refang } from "ioc-extractor";
 import { extractDomains } from "ioc-extractor";
 import { dedup, sortByValue } from "ioc-extractor/dist/src/aux/auxiliary";
 
@@ -28,35 +28,20 @@ function replaceDotBeforeTLD(text: string): string {
   return replaced.join("");
 }
 
-function matchesWithRegExp(s: string, regexp: RegExp): string[] {
-  // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
-  const matched = s.match(regexp);
-  return matched === null ? [] : sortByValue(dedup(matched));
-}
-
-const getIPv4RegExpString = (): string => {
-  return "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\[?\\.]?){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-};
-
-const getIPv4RegExp = (): RegExp => {
-  const ipv4 = getIPv4RegExpString();
-  return new RegExp(ipv4, "gi");
-};
-
-function extractIPv4s(s: string): string[] {
-  const regexp = getIPv4RegExp();
-  return matchesWithRegExp(s, regexp);
-}
-
 function defangIPs(text: string): string {
-  const ipv4s = extractIPv4s(text);
+  const chunks = text.split(" ");
 
-  for (const ipv4 of ipv4s) {
-    const escaped = escapeStringRegexp(ipv4);
-    const regexp = new RegExp(escaped, "g");
-    text = text.replace(regexp, replaceDot(ipv4));
-  }
-  return text;
+  const convertedChunks = chunks.map((chunk) => {
+    const refanged = refang(chunk);
+    const ipv4s = extractIPv4s(refanged);
+    if (ipv4s.length === 1) {
+      return replaceDot(refanged);
+    }
+
+    return chunk;
+  });
+
+  return convertedChunks.join(" ");
 }
 
 function defangDomains(text: string): string {
@@ -76,8 +61,9 @@ function defangHTTPSchemes(text: string): string {
 }
 
 export function defang(text: string): string {
-  text = defangHTTPSchemes(text);
   text = defangIPs(text);
   text = defangDomains(text);
+  text = defangHTTPSchemes(text);
+
   return text;
 }

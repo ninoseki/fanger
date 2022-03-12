@@ -41,6 +41,7 @@ describe("defang", () => {
     ["1[.]1[.]1.1", "1[.]1.1.1"],
     ["test[] 1[.]1[.]1.1", "test[] 1[.]1.1.1"],
     ["test[.] 1[.]1[.]1.1", "test[.] 1[.]1.1.1"],
+    ["test[.]com 1[.]1[.]1.1", "test[.]com 1[.]1.1.1"],
   ])(
     "should adjust format even if it is already defanged",
     (string, expected) => {
