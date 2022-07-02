@@ -96,6 +96,7 @@ The following refang techniques are supported.
 | `\.`  => `.`     | `example\.com`                         | `example.com`                   |
 | `[/]` => `/`     | `http://example.com[/]path`            | `http://example.com/path`       |
 | `[:]` => `:`     | `http[:]//example.com`                 | `http://example.com`            |
+| `[://]` => `://` | `http[://]example.com`                 | `http://example.com`            |
 | `hxxp` => `http` | `hxxps://google.com`                   | `https://google.com`            |
 | `[at]` => `@`    | `test[at]example.com`                  | `test@example.com`              |
 | `[@]` => `@`     | `test[@]example.com`                   | `test@example.com`              |
