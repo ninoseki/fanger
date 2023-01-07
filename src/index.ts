@@ -1,7 +1,6 @@
 import escapeStringRegexp from "escape-string-regexp";
 import { extractIPv4s, refang as _refang } from "ioc-extractor";
 import { extractDomains } from "ioc-extractor";
-import { dedup, sortByValue } from "ioc-extractor/dist/src/aux/auxiliary";
 
 import { tlds } from "./tlds";
 

@@ -1,4 +1,4 @@
-import { defang } from "../index";
+import { defang } from "@/index";
 
 describe("defang", () => {
   it.each([
