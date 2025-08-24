@@ -1,0 +1,23 @@
+name: Publish NPM package
+
+on:
+  release:
+    types: ["created"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@11.5.2
+      - run: npm install
+      - run: npm version --no-git-tag-version ${{ github.event.release.tag_name }}
+      - run: npm publish
