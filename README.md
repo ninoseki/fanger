@@ -28,7 +28,7 @@ $ echo "example.com" | defang
 example[.]com
 
 $ echo "test@example.com" | defang
-test@example[.]com
+test[@[example[.]com
 
 $ echo "https://example.com" | defang
 hxxps://example[.]com
@@ -38,7 +38,7 @@ hxxps://example[.]com
 $ echo "example[.]com" | refang
 example.com
 
-$ echo "test@example[.]com" | refang
+$ echo "test[@]example[.]com" | refang
 test@example.com
 
 $ echo "hxxps://example[.]com" | refang
@@ -65,35 +65,17 @@ console.log(refang(defangedText));
 
 The following defang techniques are supported.
 
-#### IPv4
-
-- `1.1.1.1` => `1[.]1.1.1`
-
-The first dot of an IPv4 will be replaced with `[.]`.
-
-#### Domain
-
-- `example.com` => `example[.]com`
-- `test.com.example.com` => `test[.]com.example[.]com`
-
-A dot before a label which is registered as a TLD will be replaced with `[.]`.
-
-#### HTTP scheme
-
-- `http` => `hxxp`
-- `https` =>  `hxxps`
-
 ### Supported refang techniques
 
 The following refang techniques are supported.
 
 | Techniques       | Defanged                               | Refanged                        |
-|------------------|----------------------------------------|---------------------------------|
+| ---------------- | -------------------------------------- | ------------------------------- |
 | Remove spaces    | `1.1.1 . 1`                            | `1.1.1.1`                       |
 | `[.]` => `.`     | `1.1.1[.]1`                            | `1.1.1.1`                       |
 | `(.)` => `.`     | `1.1.1(.)1`                            | `1.1.1.1`                       |
 | `{.}` => `.`     | `1.1.1{.}1`                            | `1.1.1.1`                       |
-| `\.`  => `.`     | `example\.com`                         | `example.com`                   |
+| `\.` => `.`      | `example\.com`                         | `example.com`                   |
 | `[/]` => `/`     | `http://example.com[/]path`            | `http://example.com/path`       |
 | `[:]` => `:`     | `http[:]//example.com`                 | `http://example.com`            |
 | `[://]` => `://` | `http[://]example.com`                 | `http://example.com`            |
