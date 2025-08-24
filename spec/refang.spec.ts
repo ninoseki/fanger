@@ -14,7 +14,7 @@ describe("refang", () => {
     "should replace {.} by .",
     (string, expected) => {
       expect(refang(string)).toBe(expected);
-    }
+    },
   );
 
   it.each([

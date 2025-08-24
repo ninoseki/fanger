@@ -34,7 +34,7 @@ describe("defang", () => {
     "should replace nothing when it is already defanged",
     (string, expected) => {
       expect(defang(string)).toBe(expected);
-    }
+    },
   );
 
   it.each([
@@ -46,6 +46,6 @@ describe("defang", () => {
     "should adjust format even if it is already defanged",
     (string, expected) => {
       expect(defang(string)).toBe(expected);
-    }
+    },
   );
 });
