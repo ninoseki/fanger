@@ -21,9 +21,12 @@
     "lib": [
       "esnext"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "isolatedModules": true,
+    "types": [
+      "vitest/globals"
+    ]
   },
   "exclude": [
     "node_modules",
