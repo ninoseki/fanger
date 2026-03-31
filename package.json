@@ -33,7 +33,8 @@
   "lint-staged": {
     "*.ts": [
       "npx oxlint --fix",
-      "npx oxfmt --write"
+      "npx oxfmt --write",
+      "npx eslint --fix --cache"
     ]
   },
   "repository": {
